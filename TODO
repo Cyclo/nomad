@@ -1,0 +1,7 @@
+
+Handle empty files on read_body
+Overhaul error handling
+Standardize code style
+Isolate library
+Impliment Huffman encoding to learn.
+Don't write header and body pointers to file.
