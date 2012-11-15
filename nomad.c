@@ -165,7 +165,7 @@ write_pack(nd_file *f, char *path)
   calculate_offsets(f);
 
   // write the header
-  // TODO: Learn to write part of structure
+  // TODO: Write part of structure
   fwrite(f,sizeof(nd_file),1,fp);
 
   // Loop headers and write
