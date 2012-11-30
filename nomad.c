@@ -4,6 +4,22 @@
 #include "nomad.h"
 
 
+nd_file *
+nd_alloc_pack()
+{
+  nd_file *f;
+
+  f = malloc(sizeof(nd_file));
+
+  if(!f){
+    die("nd_alloc_pack: failed to allocate space");
+  }
+
+  nd_create_pack(f);
+
+  return f;
+}
+
 void 
 nd_create_pack(nd_file *f)
 {
@@ -83,17 +99,19 @@ nd_alloc_body(long l)
   nd_body *b = malloc(sizeof(struct nd_body));
   
   if(!b){
-    die("out of memory");
+    die("nd_alloc_body: out of memory");
   }
 
   b->data = malloc(l);
 
   if(!b->data){
-    die("out of memory");
+    die("nd_alloc_body: out of memory");
   }
 
   return b;
 }
+
+// Path, Buffer, Length
 
 int 
 nd_read_file(char *p,char *b,long l)
@@ -326,6 +344,50 @@ nd_extract_file(nd_file *f, char *filename, char *path)
   int read = fwrite(h->body->data,1,h->length,fp);
   printf("nd_extract_file: write %d bytes of data to %s\n",read,path);
   fclose(fp);
+}
+
+int
+nd_count_headers(nd_file *f)
+{
+
+  if(!f){
+    die("nd_count_headers: no nd_file");
+  }
+
+  if(!f->headers){
+    return 0;
+  }
+
+  int i = 1;
+  nd_header *h = f->headers;
+
+  while((h = h->next) != NULL && i++)
+    ;
+
+  return i;
+}
+
+int 
+nd_get_filenames(nd_file *f, char **list)
+{
+
+  if(!f){
+    die("nd_get_filenames: no nd_file");
+  }
+
+  if(!f->headers){
+    die("nd_get_filesnames: pack has no files");
+  }
+
+  int h_count;
+  nd_header *h = f->headers;
+
+  h_count = nd_count_headers(f);
+
+  while(h != NULL){
+
+    h = h->next;
+  }
 }
 
 void 
