@@ -33,3 +33,16 @@ get_file_size(char *path)
 
   return size;
 }
+
+int 
+nd_file_exists(char *path){
+
+  FILE *fp = fopen(path,"r");
+
+  if(fp){
+    fclose(fp);
+    return 1;
+  }
+
+  return 0;
+}

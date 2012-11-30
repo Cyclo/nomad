@@ -124,6 +124,11 @@ add_file(nd_file *f, char *path)
     die("No nd_file");
   }
 
+  if(!nd_file_exists(path)){
+    fprintf(stderr,"File: %s doesn't exist, skipping.\n",path);
+    return;
+  }
+
   nd_header *h = malloc(sizeof(nd_header));
   nd_header *last = get_last_header(f);
 
