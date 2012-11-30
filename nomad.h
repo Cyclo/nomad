@@ -26,15 +26,15 @@ typedef struct nd_header nd_header;
 typedef struct nd_body nd_body;
 
 
-void create_pack(nd_file *);
-void free_pack(nd_file *);
-nd_header *get_last_header(nd_file *);
-void calculate_offsets(nd_file *);
-nd_body *alloc_body(long);
-int read_file(char*,char *,long);
-void add_file(nd_file*,char*);
-void write_pack(nd_file*,char*);
-void read_pack(nd_file*,char*);
-nd_header *find_file(nd_file*,char*);
-void extract_file(nd_file*,char*,char*);
-void dump_pack(nd_file*);
+void nd_create_pack(nd_file *);
+void nd_free_pack(nd_file *);
+nd_header *nd_get_last_header(nd_file *);
+void nd_calculate_offsets(nd_file *);
+nd_body *nd_alloc_body(long);
+int nd_read_file(char*,char *,long);
+void nd_add_file(nd_file*,char*);
+void nd_write_pack(nd_file*,char*);
+void nd_read_pack(nd_file*,char*);
+nd_header *nd_find_file(nd_file*,char*);
+void nd_extract_file(nd_file*,char*,char*);
+void nd_dump_pack(nd_file*);
