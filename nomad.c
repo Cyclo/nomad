@@ -368,7 +368,7 @@ nd_count_headers(nd_file *f)
 }
 
 int 
-nd_get_filenames(nd_file *f, char **list)
+nd_get_filenames(nd_file *f, char ***filenames)
 {
 
   if(!f){
@@ -376,18 +376,43 @@ nd_get_filenames(nd_file *f, char **list)
   }
 
   if(!f->headers){
-    die("nd_get_filesnames: pack has no files");
+    fprintf(stderr,"nd_get_filesnames: pack has no files\n");
+    return 0;
   }
 
-  int h_count;
+  int h_count,i;
+  h_count = i = 0;
+  h_count = nd_count_headers(f);
+
   nd_header *h = f->headers;
 
-  h_count = nd_count_headers(f);
+  // Allocate space for our filename list
+  char** tmp_files = malloc(h_count * sizeof(char*));
 
   while(h != NULL){
 
+    tmp_files[i] = malloc(strlen(h->filename) + 1);
+
+    if(!tmp_files[i]){
+
+      //TODO: Check this
+      int j; 
+      for(j = 0; j < i; j ++){
+        free(tmp_files[j]);
+      }
+
+      die("nd_get_filenames: out of memory!");
+    }
+
+    strcpy(tmp_files[i], h->filename);
+
+    i++;
     h = h->next;
   }
+
+  (*filenames) = tmp_files;
+
+  return h_count;
 }
 
 void 

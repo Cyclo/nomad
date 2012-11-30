@@ -51,6 +51,6 @@ int nd_read_file(char*,char *,long);
 void nd_add_file(nd_file*,char*);
 void nd_write_pack(nd_file*,char*);
 void nd_read_pack(nd_file*,char*);
-
+int nd_get_filenames(nd_file *, char ***);
 void nd_extract_file(nd_file*,char*,char*);
 void nd_dump_pack(nd_file*);
